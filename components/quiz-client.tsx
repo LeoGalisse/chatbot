@@ -1,22 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { CheckCircle, XCircle } from "lucide-react";
-
-type Question = {
-  id: number;
-  text: string;
-  options: { id: string; text: string }[];
-};
-
-type Result = {
-  correct: boolean;
-  question: string;
-  correctAnswer: string;
-};
+import { Question } from "@/models/question";
+import { Result } from "@/models/result";
 
 export default function QuizClient() {
   const [state, setState] = useState({

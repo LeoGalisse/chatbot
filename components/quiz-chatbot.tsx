@@ -2,18 +2,38 @@
 
 import type React from "react";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
+import { Result } from "@/models/result";
+import { Option } from "@/models/option";
 
-type MessageType = "bot" | "user" | "options" | "results";
-
-interface Message {
+interface BotMessage {
   id: string;
-  type: MessageType;
-  content: string | any;
-  questionId?: number;
+  type: "bot";
+  content: string;
 }
+
+interface UserMessage {
+  id: string;
+  type: "user";
+  content: string;
+}
+
+interface OptionsMessage {
+  id: string;
+  type: "options";
+  content: Option[];
+  questionId: number;
+}
+
+interface ResultsMessage {
+  id: string;
+  type: "results";
+  content: { results: Result[]; score: number };
+}
+
+type Message = BotMessage | UserMessage | OptionsMessage | ResultsMessage;
 
 export default function QuizChatbot() {
   const [state, setState] = useState({
@@ -80,7 +100,7 @@ export default function QuizChatbot() {
     }));
   };
 
-  const addOptionsMessage = (questionId: number, options: any[]) => {
+  const addOptionsMessage = (questionId: number, options: Option[]) => {
     setState((prevState) => ({
       ...prevState,
       messages: [
@@ -95,7 +115,7 @@ export default function QuizChatbot() {
     }));
   };
 
-  const addResultsMessage = (results: any[], score: number) => {
+  const addResultsMessage = (results: Result[], score: number) => {
     setState((prevState) => ({
       ...prevState,
       messages: [
@@ -109,34 +129,34 @@ export default function QuizChatbot() {
     }));
   };
 
-  const fetchNextQuestion = async () => {
+  const fetchNextQuestion = useCallback(async () => {
     setState(prevState => ({
       ...prevState,
       loading: true,
     }));
-    
+  
     try {
       const response = await fetch(`/api/${state.currentQuestionIndex}`);
       const question = await response.json();
-
+  
       if (state.currentQuestionIndex === 0) {
         addBotMessage(
           "Olá! Vou fazer 3 perguntas de múltipla escolha para você."
         );
       }
-
+  
       addBotMessage(question.text);
-
       addOptionsMessage(question.id, question.options);
     } catch (error) {
       addBotMessage("Desculpe, ocorreu um erro ao carregar a pergunta.");
+      console.error(error)
     } finally {
       setState(prevState => ({
         ...prevState,
         loading: false,
       }));
     }
-  };
+  }, [state.currentQuestionIndex])
 
   const handleSelectOption = async (
     questionId: number,
@@ -183,6 +203,7 @@ export default function QuizChatbot() {
       }
     } catch (error) {
       addBotMessage("Desculpe, ocorreu um erro ao processar sua resposta.");
+      console.error(error)
     } finally {
       setState(prevState => ({
         ...prevState,
@@ -195,7 +216,7 @@ export default function QuizChatbot() {
     if (!state.quizComplete) {
       fetchNextQuestion();
     }
-  }, [state.currentQuestionIndex, state.quizComplete]);
+  }, [state.currentQuestionIndex, state.quizComplete, fetchNextQuestion]);
 
   useEffect(() => {
     if (state.autoScroll) {
@@ -233,7 +254,7 @@ export default function QuizChatbot() {
             {message.type === "options" && (
               <div className="bg-gray-100 rounded-lg p-3 w-full">
                 <div className="space-y-2">
-                  {message.content.map((option: any) => (
+                  {message.content.map((option: Option) => (
                     <Button
                       key={option.id}
                       variant="outline"
@@ -257,7 +278,7 @@ export default function QuizChatbot() {
             {message.type === "results" && (
               <div className="bg-gray-100 rounded-lg p-3 w-full">
                 <div className="space-y-2">
-                  {message.content.results.map((result: any, index: number) => (
+                  {message.content.results.map((result: { correct: boolean, question: string, correctAnswer: string}, index: number) => (
                     <div
                       key={index}
                       className="flex items-start gap-2 p-2 border rounded-md bg-white"
