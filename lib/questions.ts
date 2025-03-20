@@ -1,9 +1,9 @@
 type Question = {
-  id: number
-  text: string
-  options: { id: string; text: string }[]
-  correctAnswer: string
-}
+  id: number;
+  text: string;
+  options: { id: string; text: string }[];
+  correctAnswer: string;
+};
 
 export const questions: Question[] = [
   {
@@ -39,4 +39,4 @@ export const questions: Question[] = [
     ],
     correctAnswer: "b",
   },
-]
+];

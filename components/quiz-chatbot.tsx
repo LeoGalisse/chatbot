@@ -7,33 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
 import { Result } from "@/models/result";
 import { Option } from "@/models/option";
-
-interface BotMessage {
-  id: string;
-  type: "bot";
-  content: string;
-}
-
-interface UserMessage {
-  id: string;
-  type: "user";
-  content: string;
-}
-
-interface OptionsMessage {
-  id: string;
-  type: "options";
-  content: Option[];
-  questionId: number;
-}
-
-interface ResultsMessage {
-  id: string;
-  type: "results";
-  content: { results: Result[]; score: number };
-}
-
-type Message = BotMessage | UserMessage | OptionsMessage | ResultsMessage;
+import { Message } from "@/models/message";
 
 export default function QuizChatbot() {
   const [state, setState] = useState({
@@ -62,20 +36,17 @@ export default function QuizChatbot() {
     const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
     const isAtBottom = scrollHeight - scrollTop - clientHeight < 50;
 
-    setState((prevState) => ({
-      ...prevState,
-      showScrollButton: !isAtBottom,
-    }));
-
     if (!isAtBottom) {
       setState((prevState) => ({
         ...prevState,
         autoScroll: false,
+        showScrollButton: !isAtBottom,
       }));
     } else if (scrollTop !== 0) {
       setState((prevState) => ({
         ...prevState,
         autoScroll: true,
+        showScrollButton: !isAtBottom,
       }));
     }
   };
@@ -149,14 +120,14 @@ export default function QuizChatbot() {
       addOptionsMessage(question.id, question.options);
     } catch (error) {
       addBotMessage("Desculpe, ocorreu um erro ao carregar a pergunta.");
-      console.error(error)
+      console.error(error);
     } finally {
       setState(prevState => ({
         ...prevState,
         loading: false,
       }));
     }
-  }, [state.currentQuestionIndex])
+  }, [state.currentQuestionIndex]);
 
   const handleSelectOption = async (
     questionId: number,
@@ -188,7 +159,7 @@ export default function QuizChatbot() {
         setState(prevState => ({
           ...prevState,
           quizComplete: true
-        }))
+        }));
 
         addBotMessage(`Você acertou ${data.score} de 3 perguntas.`);
 
@@ -199,16 +170,16 @@ export default function QuizChatbot() {
         setState(prevState => ({
           ...prevState,
           currentQuestionIndex: prevState.currentQuestionIndex + 1
-        }))
+        }));
       }
     } catch (error) {
       addBotMessage("Desculpe, ocorreu um erro ao processar sua resposta.");
-      console.error(error)
+      console.error(error);
     } finally {
       setState(prevState => ({
         ...prevState,
         loading: false
-      }))
+      }));
     }
   };
 

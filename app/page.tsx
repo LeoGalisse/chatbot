@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import QuizChatbot from "@/components/quiz-chatbot"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import QuizChatbot from "@/components/quiz-chatbot";
 
 export default function Home() {
-  const [started, setStarted] = useState(false)
+  const [started, setStarted] = useState(false);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-4 bg-gray-50">
@@ -31,6 +31,6 @@ export default function Home() {
         </CardContent>
       </Card>
     </main>
-  )
+  );
 }
 
