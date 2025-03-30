@@ -1,5 +1,5 @@
-import { NextRequest } from "next/server";
-import { questions } from "@/lib/questions";
+import { NextRequest } from 'next/server';
+import { questions } from '@/lib/questions';
 
 export async function GET(
   _: NextRequest,
@@ -17,5 +17,5 @@ export async function GET(
     });
   }
 
-  throw new Error("Question not found");
+  throw new Error('Question not found');
 }
