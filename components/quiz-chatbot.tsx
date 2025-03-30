@@ -292,8 +292,8 @@ export default function QuizChatbot() {
           {state.loading
             ? 'Processando...'
             : state.quizComplete
-            ? 'Quiz completo'
-            : 'Selecione uma opção acima'}
+              ? 'Quiz completo'
+              : 'Selecione uma opção acima'}
         </div>
       </div>
     </div>

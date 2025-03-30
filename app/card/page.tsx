@@ -15,10 +15,10 @@ export type CellMarks = {
 export default function Card() {
   const [playerCount, setPlayerCount] = useState<number>(6);
   const [cellMarks, setCellMarks] = useState<CellMarks>({
-      suspects: {},
-      weapons: {},
-      rooms: {},
-    });
+    suspects: {},
+    weapons: {},
+    rooms: {},
+  });
 
   return (
     <main className="flex min-h-screen flex-col items-center p-4 md:p-8 bg-background">
