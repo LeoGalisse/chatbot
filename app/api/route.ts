@@ -16,7 +16,7 @@ export async function POST(request: Request) {
       return {
         correct: userAnswer === question.correctAnswer,
         question: question.text,
-        correctAnswer: correctOption?.text || "",
+        correctAnswer: correctOption?.text || '',
       };
     });
 

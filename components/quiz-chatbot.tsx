@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import type React from "react";
+import type React from 'react';
 
-import { useState, useEffect, useRef, useCallback } from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowDown } from "lucide-react";
-import { Result } from "@/models/result";
-import { Option } from "@/models/option";
-import { Message } from "@/models/message";
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { Button } from '@/components/ui/button';
+import { ArrowDown } from 'lucide-react';
+import { Result } from '@/models/result';
+import { Option } from '@/models/option';
+import { Message } from '@/models/message';
 
 export default function QuizChatbot() {
   const [state, setState] = useState({
@@ -56,7 +56,7 @@ export default function QuizChatbot() {
       ...prevState,
       messages: [
         ...prevState.messages,
-        { id: crypto.randomUUID(), type: "bot", content },
+        { id: crypto.randomUUID(), type: 'bot', content },
       ],
     }));
   };
@@ -66,7 +66,7 @@ export default function QuizChatbot() {
       ...prevState,
       messages: [
         ...prevState.messages,
-        { id: crypto.randomUUID(), type: "user", content },
+        { id: crypto.randomUUID(), type: 'user', content },
       ],
     }));
   };
@@ -78,7 +78,7 @@ export default function QuizChatbot() {
         ...prevState.messages,
         {
           id: crypto.randomUUID(),
-          type: "options",
+          type: 'options',
           content: options,
           questionId,
         },
@@ -93,7 +93,7 @@ export default function QuizChatbot() {
         ...prevState.messages,
         {
           id: crypto.randomUUID(),
-          type: "results",
+          type: 'results',
           content: { results, score },
         },
       ],
@@ -112,14 +112,14 @@ export default function QuizChatbot() {
   
       if (state.currentQuestionIndex === 0) {
         addBotMessage(
-          "Olá! Vou fazer 3 perguntas de múltipla escolha para você."
+          'Olá! Vou fazer 3 perguntas de múltipla escolha para você.'
         );
       }
   
       addBotMessage(question.text);
       addOptionsMessage(question.id, question.options);
     } catch (error) {
-      addBotMessage("Desculpe, ocorreu um erro ao carregar a pergunta.");
+      addBotMessage('Desculpe, ocorreu um erro ao carregar a pergunta.');
       console.error(error);
     } finally {
       setState(prevState => ({
@@ -145,8 +145,8 @@ export default function QuizChatbot() {
     addUserMessage(optionText);
 
     try {
-      const response = await fetch(`/api`, {
-        method: "POST",
+      const response = await fetch('/api', {
+        method: 'POST',
         body: JSON.stringify({
           questionId,
           answerId: optionId,
@@ -155,7 +155,7 @@ export default function QuizChatbot() {
 
       const data = await response.json();
 
-      if ("results" in data) {
+      if ('results' in data) {
         setState(prevState => ({
           ...prevState,
           quizComplete: true
@@ -165,7 +165,7 @@ export default function QuizChatbot() {
 
         addResultsMessage(data.results, data.score);
 
-        addBotMessage("Obrigado por participar do quiz!");
+        addBotMessage('Obrigado por participar do quiz!');
       } else {
         setState(prevState => ({
           ...prevState,
@@ -173,7 +173,7 @@ export default function QuizChatbot() {
         }));
       }
     } catch (error) {
-      addBotMessage("Desculpe, ocorreu um erro ao processar sua resposta.");
+      addBotMessage('Desculpe, ocorreu um erro ao processar sua resposta.');
       console.error(error);
     } finally {
       setState(prevState => ({
@@ -201,28 +201,28 @@ export default function QuizChatbot() {
         ref={chatContainerRef}
         className="flex-1 overflow-y-auto p-4 space-y-4 flex flex-col"
         onScroll={handleScroll}
-        style={{ scrollBehavior: "smooth" }}
+        style={{ scrollBehavior: 'smooth' }}
       >
         {state.messages.map((message) => (
           <div
             key={message.id}
             className={`flex ${
-              message.type === "user" ? "justify-end" : "justify-start"
+              message.type === 'user' ? 'justify-end' : 'justify-start'
             }`}
           >
-            {message.type === "bot" && (
+            {message.type === 'bot' && (
               <div className="bg-gray-200 rounded-lg p-3 max-w-[80%]">
                 <p>{message.content}</p>
               </div>
             )}
 
-            {message.type === "user" && (
+            {message.type === 'user' && (
               <div className="bg-primary text-primary-foreground rounded-lg p-3 max-w-[80%]">
                 <p>{message.content}</p>
               </div>
             )}
 
-            {message.type === "options" && (
+            {message.type === 'options' && (
               <div className="bg-gray-100 rounded-lg p-3 w-full">
                 <div className="space-y-2">
                   {message.content.map((option: Option) => (
@@ -246,7 +246,7 @@ export default function QuizChatbot() {
               </div>
             )}
 
-            {message.type === "results" && (
+            {message.type === 'results' && (
               <div className="bg-gray-100 rounded-lg p-3 w-full">
                 <div className="space-y-2">
                   {message.content.results.map((result: { correct: boolean, question: string, correctAnswer: string}, index: number) => (
@@ -256,10 +256,10 @@ export default function QuizChatbot() {
                     >
                       <div
                         className={`text-lg ${
-                          result.correct ? "text-green-500" : "text-red-500"
+                          result.correct ? 'text-green-500' : 'text-red-500'
                         }`}
                       >
-                        {result.correct ? "✅" : "❌"}
+                        {result.correct ? '✅' : '❌'}
                       </div>
                       <div>
                         <p className="font-medium">{result.question}</p>
@@ -290,10 +290,10 @@ export default function QuizChatbot() {
       <div className="p-4 border-t">
         <div className="text-center text-sm text-gray-500">
           {state.loading
-            ? "Processando..."
+            ? 'Processando...'
             : state.quizComplete
-            ? "Quiz completo"
-            : "Selecione uma opção acima"}
+            ? 'Quiz completo'
+            : 'Selecione uma opção acima'}
         </div>
       </div>
     </div>
