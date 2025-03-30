@@ -6,8 +6,19 @@ import { RotateCcw } from 'lucide-react';
 import DetectiveNotepad from '@/components/detective-notepad';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
+export type CellMarks = {
+  [key: string]: {
+    [key: string]: string
+  }
+}
+
 export default function Card() {
   const [playerCount, setPlayerCount] = useState<number>(6);
+  const [cellMarks, setCellMarks] = useState<CellMarks>({
+      suspects: {},
+      weapons: {},
+      rooms: {},
+    });
 
   return (
     <main className="flex min-h-screen flex-col items-center p-4 md:p-8 bg-background">
@@ -20,7 +31,7 @@ export default function Card() {
           <div className="flex flex-col md:flex-row gap-4 mb-6 justify-between items-center">
             <div className="flex gap-2 items-center">
               <span className="text-sm font-medium">Number of Players:</span>
-              <Select value={playerCount.toString()} onValueChange={(value) => setPlayerCount(Number.parseInt(value))}>
+              <Select value={playerCount.toString()} onValueChange={(value: string) => setPlayerCount(Number.parseInt(value))}>
                 <SelectTrigger className="w-24">
                   <SelectValue placeholder="Players" />
                 </SelectTrigger>
@@ -38,14 +49,18 @@ export default function Card() {
               <Button variant="outline" size="sm" onClick={() => window.print()}>
                 Print
               </Button>
-              <Button variant="destructive" size="sm" id="reset-button">
+              <Button variant="destructive" size="sm" id="reset-button" onClick={() => setCellMarks({
+                suspects: {},
+                weapons: {},
+                rooms: {},
+              })}>
                 <RotateCcw className="h-4 w-4 mr-1" />
                 Reset All
               </Button>
             </div>
           </div>
 
-          <DetectiveNotepad playerCount={playerCount} />
+          <DetectiveNotepad playerCount={playerCount} cellMarks={cellMarks} setCellMarks={setCellMarks} />
         </div>
 
         <div className="mt-6 text-center text-sm text-muted-foreground">

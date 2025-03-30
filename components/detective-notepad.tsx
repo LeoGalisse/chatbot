@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { CellMarks } from '@/app/card/page';
+import { useEffect, Dispatch, SetStateAction } from 'react';
 
 const gameData = {
   suspects: ['Green', 'Mostarda', 'Pavão', 'Ameixa', 'Escarlate', 'White'],
@@ -20,29 +21,21 @@ const gameData = {
 
 const MARK_CYCLE = ['X', 'O', '?', '✓', '!', '-', ''];
 
-type CellMarks = {
-  [key: string]: {
-    [key: string]: string
-  }
-}
-
 interface DetectiveNotepadProps {
   playerCount: number
+  cellMarks: CellMarks
+  setCellMarks: Dispatch<SetStateAction<CellMarks>>
 }
 
-export default function DetectiveNotepad({ playerCount }: DetectiveNotepadProps) {
-  const [cellMarks, setCellMarks] = useState<CellMarks>({
-    suspects: {},
-    weapons: {},
-    rooms: {},
-  });
+export default function DetectiveNotepad({ playerCount, cellMarks, setCellMarks }: DetectiveNotepadProps) {
+  
 
   useEffect(() => {
     const savedMarks = localStorage.getItem('clueNotepadMarks');
     if (savedMarks) {
       setCellMarks(JSON.parse(savedMarks));
     }
-  }, []);
+  }, [setCellMarks]);
 
   useEffect(() => {
     localStorage.setItem('clueNotepadMarks', JSON.stringify(cellMarks));
