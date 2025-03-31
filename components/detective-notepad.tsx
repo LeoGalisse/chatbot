@@ -71,7 +71,7 @@ export default function DetectiveNotepad({ playerCount, cellMarks, setCellMarks 
     <div className='overflow-x-auto'>
       <div
         style={{
-          gridTemplateColumns: `150px repeat(${playerCount}, minmax(50px, 1fr))`,
+          gridTemplateColumns: `${playerCount <= 6 ? `130px repeat(${playerCount}, 1fr)` : `150px repeat(${playerCount}, minmax(30px, 1fr))`}`,
         }}
         className="grid text-primary-foreground font-bold"
       >
@@ -87,7 +87,7 @@ export default function DetectiveNotepad({ playerCount, cellMarks, setCellMarks 
         <div 
           key={item} 
           style={{
-            gridTemplateColumns: `150px repeat(${playerCount}, minmax(50px, 1fr))`,
+            gridTemplateColumns: `${playerCount <= 6 ? `130px repeat(${playerCount}, 1fr)` : `150px repeat(${playerCount}, minmax(30px, 1fr))`}`,
           }} 
           className={'grid'}
         >

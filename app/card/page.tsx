@@ -13,7 +13,7 @@ export type CellMarks = {
 }
 
 export default function Card() {
-  const [playerCount, setPlayerCount] = useState<number>(6);
+  const [playerCount, setPlayerCount] = useState<number>(2);
   const [cellMarks, setCellMarks] = useState<CellMarks>({
     suspects: {},
     weapons: {},
@@ -36,11 +36,14 @@ export default function Card() {
                   <SelectValue placeholder="Players" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="2">2</SelectItem>
-                  <SelectItem value="3">3</SelectItem>
-                  <SelectItem value="4">4</SelectItem>
-                  <SelectItem value="5">5</SelectItem>
-                  <SelectItem value="6">6</SelectItem>
+                  {Array.from({ length: 11 }).map((_, i) => (
+                    <SelectItem
+                      key={i}
+                      value={(i + 2).toString()}
+                    >
+                      {i + 2}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
