@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { RotateCcw } from 'lucide-react';
 import DetectiveNotepad from '@/components/detective-notepad';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { NotepadConfiguration } from '@/components/notepad-configurations';
 
 export type CellMarks = {
   [key: string]: {
@@ -19,6 +20,8 @@ export default function Card() {
     weapons: {},
     rooms: {},
   });
+  const [marks, setMarks] = useState<string[]>(['X', 'O', '?', '✓', '!', '-', '']);
+  const [columnLabels, setColumnLabels] = useState<string[]>([]);
 
   return (
     <main className="flex min-h-screen flex-col items-center p-4 md:p-8 bg-background">
@@ -60,10 +63,11 @@ export default function Card() {
                 <RotateCcw className="h-4 w-4 mr-1" />
                 Reset All
               </Button>
+              <NotepadConfiguration playerCount={playerCount} marks={marks} setMarks={setMarks} columnLabels={columnLabels} setColumnLabels={setColumnLabels} />
             </div>
           </div>
 
-          <DetectiveNotepad playerCount={playerCount} cellMarks={cellMarks} setCellMarks={setCellMarks} />
+          <DetectiveNotepad playerCount={playerCount} cellMarks={cellMarks} setCellMarks={setCellMarks} marks={marks} columnLabels={columnLabels} />
         </div>
 
         <div className="mt-6 text-center text-sm text-muted-foreground">

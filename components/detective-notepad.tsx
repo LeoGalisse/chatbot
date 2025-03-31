@@ -19,15 +19,15 @@ const gameData = {
   ],
 };
 
-const MARK_CYCLE = ['X', 'O', '?', '✓', '!', '-', ''];
-
 interface DetectiveNotepadProps {
   playerCount: number
   cellMarks: CellMarks
   setCellMarks: Dispatch<SetStateAction<CellMarks>>
+  marks: string[];
+  columnLabels: string[];
 }
 
-export default function DetectiveNotepad({ playerCount, cellMarks, setCellMarks }: DetectiveNotepadProps) {
+export default function DetectiveNotepad({ playerCount, cellMarks, setCellMarks, marks, columnLabels }: DetectiveNotepadProps) {
   useEffect(() => {
     const savedMarks = localStorage.getItem('clueNotepadMarks');
     if (savedMarks) {
@@ -45,9 +45,9 @@ export default function DetectiveNotepad({ playerCount, cellMarks, setCellMarks 
     setCellMarks((prev) => {
       const sectionMarks = { ...prev[section] };
       const currentMark = sectionMarks[cellId] || '';
-      const currentIndex = MARK_CYCLE.indexOf(currentMark);
-      const nextIndex = (currentIndex + 1) % MARK_CYCLE.length;
-      const nextMark = MARK_CYCLE[nextIndex];
+      const currentIndex = marks.indexOf(currentMark);
+      const nextIndex = (currentIndex + 1) % marks.length;
+      const nextMark = marks[nextIndex];
 
       if (nextMark === '') {
         delete sectionMarks[cellId];
@@ -78,7 +78,7 @@ export default function DetectiveNotepad({ playerCount, cellMarks, setCellMarks 
         <div className="p-2 border border-border bg-primary">{title}</div>
         {Array.from({ length: playerCount }).map((_, i) => (
           <div key={i} className="p-2 text-center border border-border bg-primary">
-            {i + 1}
+            {columnLabels.length > i ? columnLabels[i] : i + 1}
           </div>
         ))}
       </div>
