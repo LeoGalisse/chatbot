@@ -1,6 +1,6 @@
 'use client';
 
-import { CellMarks } from '@/app/card/page';
+import { CellMarks } from '@/app/(clue)/card/page';
 import { useEffect, Dispatch, SetStateAction } from 'react';
 
 const gameData = {

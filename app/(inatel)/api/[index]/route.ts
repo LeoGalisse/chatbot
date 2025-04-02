@@ -3,9 +3,9 @@ import { questions } from '@/lib/questions';
 
 export async function GET(
   _: NextRequest,
-  { params }: { params: Promise<{ index: number }> }
+  { params }: { params: { index: number } }
 ) {
-  const { index } = await params;
+  const { index } = params;
 
   if (index >= 0 && index < questions.length) {
     const question = questions[index];
@@ -17,5 +17,5 @@ export async function GET(
     });
   }
 
-  throw new Error('Question not found');
+  return new Response(JSON.stringify({ error: 'Question not found' }), { status: 404 });
 }
