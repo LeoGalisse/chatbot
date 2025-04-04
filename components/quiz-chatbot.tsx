@@ -107,7 +107,7 @@ export default function QuizChatbot() {
     }));
   
     try {
-      const response = await fetch(`/api/${state.currentQuestionIndex}`);
+      const response = await fetch(`/api/questions/${state.currentQuestionIndex}`);
       const question = await response.json();
   
       if (state.currentQuestionIndex === 0) {
@@ -145,7 +145,7 @@ export default function QuizChatbot() {
     addUserMessage(optionText);
 
     try {
-      const response = await fetch('/api', {
+      const response = await fetch('/api/questions', {
         method: 'POST',
         body: JSON.stringify({
           questionId,
@@ -211,7 +211,7 @@ export default function QuizChatbot() {
             }`}
           >
             {message.type === 'bot' && (
-              <div className="bg-gray-200 rounded-lg p-3 max-w-[80%]">
+              <div className="bg-input rounded-lg p-3 max-w-[80%]">
                 <p>{message.content}</p>
               </div>
             )}
@@ -223,7 +223,7 @@ export default function QuizChatbot() {
             )}
 
             {message.type === 'options' && (
-              <div className="bg-gray-100 rounded-lg p-3 w-full">
+              <div className="bg-sidebar-border rounded-lg p-3 w-full">
                 <div className="space-y-2">
                   {message.content.map((option: Option) => (
                     <Button
@@ -247,12 +247,12 @@ export default function QuizChatbot() {
             )}
 
             {message.type === 'results' && (
-              <div className="bg-gray-100 rounded-lg p-3 w-full">
+              <div className="bg-input rounded-lg p-3 w-full">
                 <div className="space-y-2">
                   {message.content.results.map((result: { correct: boolean, question: string, correctAnswer: string}, index: number) => (
                     <div
                       key={index}
-                      className="flex items-start gap-2 p-2 border rounded-md bg-white"
+                      className="flex items-start gap-2 p-2 border rounded-md bg-card"
                     >
                       <div
                         className={`text-lg ${

@@ -8,11 +8,11 @@ vi.mock('@/lib/questions', () => ({
   ],
 }));
 
-import { GET } from '@/app/(inatel)/api/[index]/route';
+import { GET } from '@/app/(inatel)/api/questions/[index]/route';
 
 describe('API: /api/[index]', () => {
   it('should return a valid question for a valid index', async () => {
-    const req = new NextRequest('http://localhost:3000/api/1');
+    const req = new NextRequest('http://localhost:3000/api/questions/1');
     const params = { index: 1 };
 
     const response = await GET(req, { params });
@@ -27,7 +27,7 @@ describe('API: /api/[index]', () => {
   });
 
   it('should return 404 for an invalid index', async () => {
-    const req = new NextRequest('http://localhost:3000/api/99');
+    const req = new NextRequest('http://localhost:3000/api/questions/99');
     const params = { index: 99 };
 
     const response = await GET(req, { params });
@@ -38,7 +38,7 @@ describe('API: /api/[index]', () => {
   });
 
   it('should return 404 for a negative index', async () => {
-    const req = new NextRequest('http://localhost:3000/api/-1');
+    const req = new NextRequest('http://localhost:3000/api/questions/-1');
     const params = { index: -1 };
 
     const response = await GET(req, { params });
