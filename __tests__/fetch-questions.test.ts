@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server';
 import { describe, it, expect, vi } from 'vitest';
 
-vi.mock('@/lib/questions', () => ({
+vi.mock('@/__tests__/mock/questions', () => ({
   questions: [
     { id: 1, text: 'What is 2+2?', options: ['3', '4', '5'] },
     { id: 2, text: 'What is the capital of France?', options: ['Berlin', 'Madrid', 'Paris'] },

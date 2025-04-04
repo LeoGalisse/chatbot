@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { questions } from '@/lib/questions';
+import { questions } from '@/__tests__/mock/questions';
 
 export async function GET(
   _: NextRequest,
