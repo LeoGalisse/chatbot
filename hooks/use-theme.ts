@@ -11,7 +11,7 @@ export function useTheme() {
       if (savedTheme) return savedTheme;
       return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
-    return 'light'; // Default theme if running on server
+    return 'light';
   });
 
   useEffect(() => {
