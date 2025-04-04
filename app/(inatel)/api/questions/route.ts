@@ -1,4 +1,4 @@
-import { questions } from '@/lib/questions';
+import { questions } from '@/__tests__/mock/questions';
 import { NextResponse } from 'next/server';
 
 const userAnswers: Record<number, string> = {};

@@ -8,6 +8,13 @@
       "when": 1743017902740,
       "tag": "0000_damp_paladin",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1743803463492,
+      "tag": "0001_naive_landau",
+      "breakpoints": true
     }
   ]
 }
