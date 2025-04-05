@@ -1,10 +1,9 @@
-import { Period } from '@/models/period';
 import React from 'react';
 
 interface PeriodFilterProps {
-  selectedPeriod: Period
+  selectedPeriod: string
   // eslint-disable-next-line no-unused-vars
-  onPeriodChange: (period: Period) => void
+  onPeriodChange: (period: string) => void
 }
 
 export const PeriodFilter: React.FC<PeriodFilterProps> = ({

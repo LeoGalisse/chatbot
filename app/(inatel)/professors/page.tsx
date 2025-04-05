@@ -2,21 +2,28 @@
 
 import { PeriodFilter } from '@/components/period-filter';
 import { ProfessorList } from '@/components/professor-list';
-import { Period } from '@/models/period';
 import { Professor } from '@/models/professor';
 import React, { useEffect, useState } from 'react';
-import { professors as professorsData } from '@/lib/professor';
+import { listAllProfessors } from './actions';
+import { CreateProfessorDialog } from '@/components/professor-dialog';
 
 export default function Professors() {
   const [professors, setProfessors] = useState<Professor[]>([]);
-  const [selectedPeriod, setSelectedPeriod] = useState<Period>('todos');
+  const [selectedPeriod, setSelectedPeriod] = useState<string>('todos');
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        setProfessors(professorsData);
+        const { data, status } = await listAllProfessors();
+
+        if (data) {
+          setProfessors(data as Professor[]);
+        } else {
+          throw new Error(status);
+        }
+
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -26,13 +33,14 @@ export default function Professors() {
     fetchData();
   }, []);
 
-  const handlePeriodChange = (period: Period) => {
+  const handlePeriodChange = (period: string) => {
     setSelectedPeriod(period);
   };
-  
+
   return (
     <div className="min-h-screen bg-background text-primary">
       <main className="container mx-auto px-4 py-24">
+        <CreateProfessorDialog setProfessors={setProfessors} />
         <div className="max-w-6xl mx-auto">
           <PeriodFilter
             selectedPeriod={selectedPeriod}

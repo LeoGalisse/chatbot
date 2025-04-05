@@ -16,6 +16,7 @@ export const authConfig = {
       const isOnRegister = nextUrl.pathname.startsWith('/register');
       const isOnLogin = nextUrl.pathname.startsWith('/login');
       const isOnCard = nextUrl.pathname.startsWith('/card');
+      const isOnApiLogin = nextUrl.pathname.startsWith('/api/auth');
 
       if (isOnCard) {
         return true;
@@ -25,7 +26,7 @@ export const authConfig = {
         return Response.redirect(new URL('/', nextUrl as unknown as URL));
       }
 
-      if (isOnRegister || isOnLogin) {
+      if (isOnRegister || isOnLogin || isOnApiLogin) {
         return true; // Always allow access to register and login pages
       }
 
