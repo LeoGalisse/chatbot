@@ -15,6 +15,20 @@
       "when": 1743803463492,
       "tag": "0001_naive_landau",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1743809227811,
+      "tag": "0002_perpetual_christian_walker",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1743811380807,
+      "tag": "0003_absurd_shard",
+      "breakpoints": true
     }
   ]
 }

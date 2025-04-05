@@ -1,9 +1,6 @@
-import { Period } from './period';
-
 export interface Professor {
   nomeDoProfessor: string;
   horarioDeAtendimento: string;
-  periodo: Period;
+  periodo: string;
   sala: string;
-  predio: string[];
 }

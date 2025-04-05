@@ -1,10 +1,9 @@
 import { Professor } from '@/models/professor';
-import { Period } from '@/models/period';
 import { ProfessorCard } from './professor-card';
 
 interface ProfessorListProps {
   professors: Professor[]
-  selectedPeriod: Period
+  selectedPeriod: string
 }
 
 export const ProfessorList: React.FC<ProfessorListProps> = ({
