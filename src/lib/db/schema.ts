@@ -1,5 +1,18 @@
 import { InferSelectModel } from 'drizzle-orm';
 import { pgTable, uuid, varchar } from 'drizzle-orm/pg-core';
+import * as FinanceSchemas from '@/app/finance/_database/schemas/index';
+
+import { env } from '../env';
+import { drizzle } from 'drizzle-orm/postgres-js';
+import postgres from 'postgres';
+
+const client = postgres(env.DATABASE_URL);
+
+export const db = drizzle(client, {
+  schema: {
+    FinanceSchemas
+  }
+});
 
 export const user = pgTable('users', {
   id: uuid('id').primaryKey().notNull().defaultRandom(),
